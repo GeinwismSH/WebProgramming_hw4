@@ -1,0 +1,40 @@
+/* <!--
+F84086105 傅瀚陞 第4次作業 5/17
+F84086105 HanShengFu The Fourth Homework 5/17
+--> */
+
+/* 設定table格式 */
+table         { 
+                border-collapse:collapse; }
+table, td, th { border: 1px solid black; 
+                padding: 4px; 
+                margin-top: 20px; }
+
+
+
+/* 統一撲克牌大小 */                
+.pokers  {
+    width: 8%;
+    margin: 5px;
+}
+
+/* 統一撲克牌大小 */
+.chips{
+    width: 8%;
+    margin: auto;
+}
+
+/* 統一按鈕 */
+.button,.option{
+    width: 8%;
+    height: 5%;
+    margin: auto;
+}
+
+/* 調整遊戲背景 */
+#background_main{  
+    background-color: rgb(4, 61, 4);
+    background-position:100% center;
+    background-origin:border-box;
+    background-size:cover;
+    background-repeat:no-repeat;}

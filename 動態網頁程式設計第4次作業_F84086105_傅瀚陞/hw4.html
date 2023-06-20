@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--
+F84086105 傅瀚陞 第4次作業 5/17
+F84086105 HanShengFu The Fourth Homework 5/17
+-->
+
+<html>
+   <head>
+      <meta charset = "utf-8">
+      <title>21點</title> 
+      <link rel = "stylesheet" type = "text/css" href = "style.css">
+
+   </head>
+
+   <body id="background_main" style="text-align: center">
+      <script src = "hw4.js"></script> 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      <!-- banana cat 圖片-->
+      <div id="egg" width = 15% style="position: fixed; top: 42%; left: 37%;"></div>
+      <!-- 廣告圖片-->
+      <div id="ads_container"></div>
+      <div id="intial" style="text-align: center">
+         
+            <!-- happy cat 圖片-->
+            <img width = 10% style="position: fixed; top: 40%; left: 10%;" src="./happy cat.gif">
+            
+            <!-- 進入遊戲規則說明介面-->
+            <div style="background-color: white; width:50%; margin: 10px auto; border: 5px double black; padding: 15px;">
+               <img width = 30%  src="./BlackJack.png">
+               <h3>21點規則說明</h3>
+               <p style="border: 2px dashed  rgb(83, 5, 5); padding: 8px;">
+               <strong>HW3已放過這裡不占版面</strong><br>
+
+               
+               </p>
+               <h3>程式功能說明</h3>
+               <p style="border: 2px dashed  rgb(46, 4, 4); padding: 8px;">
+               <strong>莊家作弊按鈕</strong> : 按下後莊家會有很高的機率抽到21點。<br>
+               <strong>玩家作弊按鈕</strong> :按下後可看到莊家的點數總和。<br>
+               <strong>開新遊戲</strong> :重新開一個玩家身分進入遊戲。<br>
+               <strong>好的按鈕</strong> :按下去後才算玩完一局，也會在此時紀錄資金與時間。<br>
+               <strong>*注一</strong> :某些時候會有延遲，那是動畫效果，並非程式lag，請耐心等候。<br>
+               <strong>*注二</strong> :為防止算牌，牌堆共有四副撲克，抽光後會跳出提示重新洗牌。<br>
+               <strong>*注三</strong> :遊戲在按下好的按鈕後記錄，Rank上紀錄每個玩家的最高資金。<br>
+               <strong>*注四</strong> :Record Table記的東西在關閉瀏覽器後消失。<br>
+               <strong>*注五</strong> :按開新遊戲就無法再遊玩目前進度。<br>
+               <strong>*注六</strong> :使用相同名字會覆蓋掉之前的紀錄。<br>
+               <strong>*注七</strong> :每15秒沒點擊網頁就會跳提醒出來。<br>
+               <strong>*注八</strong> :每20秒跳一次廣告。<br>
+               <strong>*注九</strong> :若上一次關遊戲時資金有剩餘，可LoadGame繼續。<br>
+               <strong>*注十</strong> :loadGame會重製時間。<br>
+               
+               </p>
+            </div>
+            
+         <!-- 開新遊戲按鈕 -->
+         <div>
+            <input id="playerName" type="text" placeholder="輸入新玩家名稱">
+            <button id="start">Start New Game</button>
+            <input id = "loadoldgame" type = "button" value = "Load Old Game">
+         </div>
+         
+         
+
+      </div>
+
+      <!-- 所有主視窗 -->
+      <div id="main">
+         <!-- 訊息框設置 -->
+         <div style="background-color: white; width:35%; margin: 10px auto; border: 3px solid black; padding: 10px;">
+            --訊息框--
+            <div id="hint" style="font-weight: bolder;">請下注!</div>
+         </div>
+         <!-- 金錢介面設置 -->
+         <div id = "moneyUI" style="background-color: yellow; width:20%; margin: auto;font-weight: bold; ">
+            你的資金 : $
+            <span id = "money"></span>
+         </div>
+         
+         <!-- 籌碼介面相關 -->
+         <div id="chipUI" >
+            <!-- 顯示籌碼數量 -->
+            <div style="background-color: rgb(6, 153, 6); width:20%; margin: auto; font-weight: bold ">
+               你下的籌碼 :
+               <span id = "mychips"></span>
+            </div>
+            <!-- 籌碼圖片 -->
+            <div id="chipimg" style="margin: 10px auto">
+               <!-- <img class = "chips" id = "one" src="./chips1.png"> -->
+               <img class = "chips" id = "ten" src="./圖片2.png">
+               <img class = "chips" id = "fifty" src="./圖片3.png">
+               <img class = "chips" id = "onehundred" src="./圖片4.png">
+               <img class = "chips" id = "fivehundred" src="./圖片5.png">
+               <img class = "chips" id = "onethousand" src="./圖片6.png">             
+            </div>
+
+            <!-- 確定或重製籌碼選擇按鈕 -->
+            <form class="betblock" id = placebet action = "#">
+               <input class = "option" id = "deal" type = "button" value = "Deal">
+               <input class = "option" id = "clear" type = "button" value = "Clear">
+            </form>
+         </div>
+            
+         <!-- 21點主畫面 -->
+         <div id = gameUI>
+            <!-- 21點用選項按鈕 -->
+            <form id = mainbutton action = "#" style="margin: 10px auto">
+               <input class = "button" id = "Hit" type = "button" value = "Hit">
+               <input class = "button" id = "Stand" type = "button" value = "Stand">
+               <input class = "button" id = "Signal" type = "button" value = "Signal">
+               <input class = "button" id = "Surrender" type = "button" value = "Surrender">
+               <input class = "button" id = "Split" type = "button" value = "Split">
+            </form>
+  
+            <!-- 莊家點數介面 -->
+            <div style="background-color: rgb(255, 136, 0); width:10%; margin: 10px auto;">
+               莊家
+               <span id = "dealerpoint" ></span>
+            </div>
+            <!-- 莊家牌介面 -->
+            <div id = "dealercards" ></div>
+
+            <!-- 玩家點數介面 -->
+            <div style="background-color: rgb(255, 136, 0); width:10%; margin:10px auto;">
+               玩家
+               點數:
+               <span id = "mypoint" ></span>   
+               <span id = "secondpoint" ></span>
+            </div>
+            <!-- 玩家牌介面 -->
+            <div id = "mycards" ></div>
+
+            <!-- 好的再來一局按鈕 -->
+            <div id = "again" style="margin:5px auto;"></div>
+         </div>
+
+         <!-- 開新遊戲按鈕 -->
+         <div id = giveup >
+            <input style="position: fixed; bottom: 100px; left: 30px;margin: auto;"
+            class = "button" id = "Regame" type = "button" value = "開新遊戲">
+         </div>
+
+         <!-- 莊家作弊按鈕 -->
+         <div style="background-color: rgb(255, 38, 0);padding: 5px; position: fixed; bottom: 60px; left: 30px; margin: auto;">
+            <label for="dealercheat">莊家作弊按鈕</label>
+            <input type="checkbox" id="dealercheat">
+         </div>
+
+         <!-- 玩家作弊按鈕 -->
+         <div style="background-color: rgb(255, 115, 0);padding: 5px; position: fixed; bottom: 20px; left: 30px; margin: auto;">
+            <label for="playercheat">玩家作弊按鈕</label>
+            <input type="checkbox" id="playercheat">
+         </div>
+
+      </div>
+
+      <!-- 記錄用表格 -->
+      <div style="position: fixed; top: 0; right: 0; width: 20%; height: 100%; overflow-y: auto; padding: 5px;">
+         <details>
+            <summary style="background-color: rgb(8, 170, 245);">Record Table</summary>
+            <table id="recordtable" style="width: 100%;">
+
+            </table>
+         </details>
+      </div>
+
+      <div style="position: fixed; top: 0; left: 10px; width: 18%; height: 50%; overflow-y: auto; padding: 5px;">
+         <div style="background-color: white; margin: 5px auto; border: 1px solid black; padding: 5px;">
+            目前玩家：
+            <span id="currentplayer">None</span><br>
+            遊戲時間：
+            <span id="currentplayertime">None</span>
+            <details>
+               <summary style="background-color: rgb(83, 245, 8);">Rank Table</summary>
+               <table id="ranktable" style="width: 100%;">
+                  
+               </table>
+            </details>
+         </div>
+
+
+      </div>
+
+   </body>
+</html>
+
